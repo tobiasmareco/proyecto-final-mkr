@@ -15,6 +15,10 @@ const userSchema = new moongose.Schema({
     required: true
   },
   token: String,
+  active: {
+    type: Boolean,
+    default: false
+  },
   premium: {
     type: Boolean,
     default: false
@@ -27,4 +31,6 @@ const userSchema = new moongose.Schema({
   timestamps: true,
 })
 
-export const User = moongose.model('Users', userSchema);
+const User = moongose.model('Users', userSchema);
+
+export default User
