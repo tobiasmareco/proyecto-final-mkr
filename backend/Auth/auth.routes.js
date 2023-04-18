@@ -1,6 +1,10 @@
 import express from 'express'
+import { loginController } from './Login/login.controller.js'
+import { validateLogin } from './Login/login.validator.js'
+import { registerController } from './Register/register.controller.js'
 const authRoutes = express.Router()
 
-authRoutes.get('/',(req,res)=> res.send('Welcome to auth route'))
+authRoutes.post('/', validateLogin, loginController)
+authRoutes.post('/register', registerController)
 
 export default authRoutes
