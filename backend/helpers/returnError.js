@@ -1,6 +1,6 @@
-export const returnError = (response, statusCode, errorMessage) => {
+export const returnError = (statusCode, errorMessage) => {
   return {
-    response: response,
+    response: "error",
     statusCode: statusCode,
     msg: new Error(errorMessage).message,
   };
