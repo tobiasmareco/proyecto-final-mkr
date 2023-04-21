@@ -7,7 +7,7 @@ import {
 } from "./index.js";
 
 export const createProjectController = async (req, res) => {
-  const { result, error } = await createProjectService(req.body);
+  const { result, error } = await createProjectService(req.body, req.user);
   if (error) {
     return res
       .status(error.statusCode)
@@ -21,7 +21,7 @@ export const createProjectController = async (req, res) => {
 };
 
 export const getProjectsController = async (req, res) => {
-  const { result, error } = await getProjectsService();
+  const { result, error } = await getProjectsService(req.user);
   if (error) {
     return res
       .status(error.statusCode)
@@ -35,7 +35,7 @@ export const getProjectsController = async (req, res) => {
 };
 
 export const getProjectIdController = async (req, res) => {
-  const { result, error } = await getProjectIdService(req.params.id);
+  const { result, error } = await getProjectIdService(req.params.id, req.user);
   if (error) {
     return res
       .status(error.statusCode)
@@ -48,7 +48,7 @@ export const getProjectIdController = async (req, res) => {
   });
 };
 export const updateProjectController = async (req, res) => {
-  const { result, error } = await updateProjectService(req);
+  const { result, error } = await updateProjectService(req, req.user);
   if (error) {
     return res
       .status(error.statusCode)
@@ -61,7 +61,7 @@ export const updateProjectController = async (req, res) => {
   });
 };
 export const deleteProjectController = async (req, res) => {
-  const { result, error } = await deleteProjectService(req.params.id);
+  const { result, error } = await deleteProjectService(req.params.id, req.user);
   if (error) {
     return res
       .status(error.statusCode)
