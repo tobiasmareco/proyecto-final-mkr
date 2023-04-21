@@ -52,7 +52,7 @@ export const updateProjectController = async (req, res) => {
   if (error) {
     return res
       .status(error.statusCode)
-      .json({ response: error.response, msg: error.msg, result });
+      .json({ response: error.response, msg: error.msg });
   }
   return res.status(201).json({
     response: "success",

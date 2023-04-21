@@ -1,7 +1,6 @@
 import User from "../Users/users.model.js";
 import Project from "./projects.model.js";
 
-let userId = "644143d9c046653008730ab9";
 export const createProjectsRepository = async (
   { title, description, finishDate, image },
   userId
@@ -90,40 +89,36 @@ export const updateProjectRepository = async (
   userId
 ) => {
   try {
-    //Obtener proyecto del usuario loggeado (reeplazar del en duro)
-    let project = await Project.find({
-      _id: projectId,
-      userId,
-    });
-    //Si obtuvo resultados en el array
-    if (project.length > 0) {
-      const { title, description } = { ...projectBody };
-
-      project = await Project.findByIdAndUpdate(
-        { _id: projectId },
-        { title: title, description: description },
-        { new: true }
-      );
-
-      return { response: "success", result: project };
+    const project = await Project.findOne({ _id: projectId, userId });
+    if (!project) {
+      return { response: "error", msg: "El proyecto no existe" };
     }
+    const { title, description, image, finishDate, status } = projectBody;
+    project.title = title ? title : project.title;
+    project.description = description ? description : project.description;
+    project.image = image ? image : project.image;
+    project.finishDate = finishDate
+      ? finishDate
+      : project.finishDate.toDateString();
+    project.status = status ? status : project.status;
+
+    await project.save();
     return {
-      response: "error",
-      statusCode: 404,
-      msg: new Error("No se encontro proyecto.").message,
+      response: "success",
+      msg: "Se ha actualizado el proyecto correctamente.",
+      project,
     };
   } catch (error) {
     return {
       response: "error",
-      error,
+      msg: error.message,
       statusCode: 500,
     };
   }
 };
 
-export const deleteProjectRepository = async ({ projectId }) => {
+export const deleteProjectRepository = async ({ projectId }, userId) => {
   try {
-    //Obtener proyecto del usuario loggeado (reeplazar del en duro)
     let project = await Project.find({
       _id: projectId,
       userId,

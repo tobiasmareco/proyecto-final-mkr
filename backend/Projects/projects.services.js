@@ -41,7 +41,7 @@ export const updateProjectService = async (project, userId) => {
   if (response.response === "error") {
     return { error: response };
   }
-  return { result: response.result };
+  return { result: response.project };
 };
 export const deleteProjectService = async (project, userId) => {
   const response = await deleteProjectRepository(
