@@ -21,11 +21,12 @@ export const createProjectController = async (req, res) => {
 };
 
 export const getProjectsController = async (req, res) => {
+  console.log(req.user)
   const { result, error } = await getProjectsService(req.user);
   if (error) {
     return res
       .status(error.statusCode)
-      .json({ response: error.response, msg: error.msg });
+      .json({ response: 'error', msg: error });
   }
   return res.status(201).json({
     response: "success",

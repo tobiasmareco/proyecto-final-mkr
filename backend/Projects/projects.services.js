@@ -14,8 +14,8 @@ export const createProjectService = async (project, userId) => {
   return { result: response.result };
 };
 
-export const getProjectsService = async (project, userId) => {
-  const response = await getProjectsRepository({ ...project }, userId);
+export const getProjectsService = async (userId) => {
+  const response = await getProjectsRepository(userId);
   if (response.response === "error") {
     return { error: response };
   }

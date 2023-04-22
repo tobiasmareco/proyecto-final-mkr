@@ -24,6 +24,7 @@ export const loginRepository = async (email, password) => {
       tokenSession: JWT.GENERATE(user._id, process.env.API_JWT_SECRET),
     };
   } catch (error) {
+    console.log(error)
     return returnError(403, error.message);
   }
 };

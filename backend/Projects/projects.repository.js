@@ -44,6 +44,7 @@ export const createProjectsRepository = async (
 };
 
 export const getProjectsRepository = async (userId) => {
+  console.log(userId)
   try {
     const project = await Project.find({
       userId,
