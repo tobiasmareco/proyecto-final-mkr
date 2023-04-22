@@ -6,14 +6,14 @@ const taskSchema = new mongoose.Schema({
     required: true
   },
   description: {
-    type: String
+    type: String,
+    required: true
   },
   projectId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Projects',
     required: true
-  }
-  ,
+  },
   status: {
     type: String,
     enum: ['pendiente', 'finalizado'],
@@ -24,7 +24,9 @@ const taskSchema = new mongoose.Schema({
     enum: ['baja', 'media', 'alta'],
     default: 'alta'
   }
-}, { timestamps: true })
+}, {
+  timestamps: true
+})
 
 const Task = mongoose.model('Tasks', taskSchema)
 export default Task
