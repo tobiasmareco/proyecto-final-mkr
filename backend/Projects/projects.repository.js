@@ -5,43 +5,50 @@ export const createProjectsRepository = async (
   { title, description, finishDate, image },
   userId
 ) => {
-  let userIsPremium = false;
-  try {
-    //Reemplazar por user loggeado
-    const user = await User.findOne({ _id: userId });
-    userIsPremium = user.premium;
-    const projects = (await Project.find({ userId })) || [];
-    if (!userIsPremium && projects.length >= 2) {
-      return {
-        response: "error",
-        statusCode: 404,
-        msg: "El usuario no posee una cuenta premium. Solo es valido para 2 proyectos. ",
-      };
-    }
-    const project = await Project.findOne({ title, userId: userId });
-    //project title ya existe = true
-    if (project) {
-      return {
-        response: "error",
-        statusCode: 404,
-        msg: new Error("El proyecto ya se encuentra creado.").message,
-      };
-    }
-    const newProject = {
-      title,
-      description,
-      userId: userId,
-      finishDate,
-      image,
-    };
-    //Crea nuevo proyecto
-    const createProject = await Project.create(newProject);
-    return { response: "success", result: createProject };
-  } catch (error) {
-    console.log(error);
-    return { response: "error", error, statusCode: 500 };
-  }
+  // let userIsPremium = false;
+  // try {
+  //   //Reemplazar por user loggeado
+  //   const user = await User.findOne({ _id: userId });
+  //   userIsPremium = user.premium;
+  //   const projects = (await Project.find({ userId })) || [];
+  //   if (!userIsPremium && projects.length >= 2) {
+  //     return {
+  //       response: "error",
+  //       statusCode: 404,
+  //       msg: "El usuario no posee una cuenta premium. Solo es valido para 2 proyectos. ",
+  //     };
+  //   }
+  //   const project = await Project.findOne({ title, userId: userId });
+  //   //project title ya existe = true
+  //   if (project) {
+  //     return {
+  //       response: "error",
+  //       statusCode: 404,
+  //       msg: new Error("El proyecto ya se encuentra creado.").message,
+  //     };
+  //   }
+  //   const newProject = {
+  //     title,
+  //     description,
+  //     userId: userId,
+  //     finishDate,
+  //     image,
+  //   };
+  //   //Crea nuevo proyecto
+  // try{
+    // const createProject = await Project.create(newProject);
+    // return { response: "success", result: createProject };
+    return await Project.create(newProject)
+  // } catch (error) {
+  //   // console.log(error);
+  //   // return { response: "error", error, statusCode: 500 };
+  //   return error
+  // }
 };
+
+export const getUserId = (id)=>{
+  return {_id : '1'}
+}
 
 export const getProjectsRepository = async (userId) => {
   console.log(userId)
@@ -85,6 +92,8 @@ export const getProjectIdRepository = async ({ projectId }, userId) => {
     };
   }
 };
+
+
 export const updateProjectRepository = async (
   { projectId, projectBody },
   userId

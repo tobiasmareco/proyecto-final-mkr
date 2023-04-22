@@ -20,6 +20,7 @@ export const createProjectController = async (req, res) => {
   });
 };
 
+
 export const getProjectsController = async (req, res) => {
   console.log(req.user)
   const { result, error } = await getProjectsService(req.user);
@@ -28,12 +29,13 @@ export const getProjectsController = async (req, res) => {
       .status(error.statusCode)
       .json({ response: 'error', msg: error });
   }
-  return res.status(201).json({
+  return res.status(200).json({
     response: "success",
     msg: "Proyectos encontrados satisfactoriamente",
     result,
   });
 };
+
 
 export const getProjectIdController = async (req, res) => {
   const { result, error } = await getProjectIdService(req.params.id, req.user);
@@ -42,12 +44,14 @@ export const getProjectIdController = async (req, res) => {
       .status(error.statusCode)
       .json({ response: error.response, msg: error.msg });
   }
-  return res.status(201).json({
+  return res.status(200).json({
     response: "success",
     msg: "Proyecto  encontrado satisfactoriamente",
     result,
   });
 };
+
+
 export const updateProjectController = async (req, res) => {
   const { result, error } = await updateProjectService(req, req.user);
   if (error) {
@@ -55,12 +59,14 @@ export const updateProjectController = async (req, res) => {
       .status(error.statusCode)
       .json({ response: error.response, msg: error.msg });
   }
-  return res.status(201).json({
+  return res.status(200).json({
     response: "success",
     msg: "Proyecto  actualizado satisfactoriamente",
     result,
   });
 };
+
+
 export const deleteProjectController = async (req, res) => {
   const { result, error } = await deleteProjectService(req.params.id, req.user);
   if (error) {
@@ -68,7 +74,7 @@ export const deleteProjectController = async (req, res) => {
       .status(error.statusCode)
       .json({ response: error.response, msg: error.msg, result });
   }
-  return res.status(201).json({
+  return res.status(200).json({
     response: "success",
     msg: "Proyecto  eliminado satisfactoriamente",
     result,
