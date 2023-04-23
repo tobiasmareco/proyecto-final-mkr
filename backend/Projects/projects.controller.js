@@ -20,14 +20,11 @@ export const createProjectController = async (req, res) => {
   });
 };
 
-
 export const getProjectsController = async (req, res) => {
-  console.log(req.user)
+  console.log(req.user);
   const { result, error } = await getProjectsService(req.user);
   if (error) {
-    return res
-      .status(error.statusCode)
-      .json({ response: 'error', msg: error });
+    return res.status(error.statusCode).json({ response: "error", msg: error });
   }
   return res.status(200).json({
     response: "success",
@@ -35,7 +32,6 @@ export const getProjectsController = async (req, res) => {
     result,
   });
 };
-
 
 export const getProjectIdController = async (req, res) => {
   const { result, error } = await getProjectIdService(req.params.id, req.user);
@@ -51,9 +47,12 @@ export const getProjectIdController = async (req, res) => {
   });
 };
 
-
 export const updateProjectController = async (req, res) => {
-  const { result, error } = await updateProjectService(req, req.user);
+  const { result, error } = await updateProjectService(
+    req.body,
+    req.params.id,
+    req.user
+  );
   if (error) {
     return res
       .status(error.statusCode)
@@ -65,7 +64,6 @@ export const updateProjectController = async (req, res) => {
     result,
   });
 };
-
 
 export const deleteProjectController = async (req, res) => {
   const { result, error } = await deleteProjectService(req.params.id, req.user);

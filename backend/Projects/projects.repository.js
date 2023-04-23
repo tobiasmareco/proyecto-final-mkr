@@ -1,73 +1,22 @@
 import User from "../Users/users.model.js";
 import Project from "./projects.model.js";
 
-export const createProjectsRepository = async (
-  { title, description, finishDate, image },
-  userId
-) => {
-  // let userIsPremium = false;
-  // try {
-  //   //Reemplazar por user loggeado
-  //   const user = await User.findOne({ _id: userId });
-  //   userIsPremium = user.premium;
-  //   const projects = (await Project.find({ userId })) || [];
-  //   if (!userIsPremium && projects.length >= 2) {
-  //     return {
-  //       response: "error",
-  //       statusCode: 404,
-  //       msg: "El usuario no posee una cuenta premium. Solo es valido para 2 proyectos. ",
-  //     };
-  //   }
-  //   const project = await Project.findOne({ title, userId: userId });
-  //   //project title ya existe = true
-  //   if (project) {
-  //     return {
-  //       response: "error",
-  //       statusCode: 404,
-  //       msg: new Error("El proyecto ya se encuentra creado.").message,
-  //     };
-  //   }
-  //   const newProject = {
-  //     title,
-  //     description,
-  //     userId: userId,
-  //     finishDate,
-  //     image,
-  //   };
-  //   //Crea nuevo proyecto
-  // try{
-    // const createProject = await Project.create(newProject);
-    // return { response: "success", result: createProject };
-    return await Project.create(newProject)
-  // } catch (error) {
-  //   // console.log(error);
-  //   // return { response: "error", error, statusCode: 500 };
-  //   return error
-  // }
-};
-
-export const getUserId = (id)=>{
-  return {_id : '1'}
-}
-
-export const getProjectsRepository = async (userId) => {
-  console.log(userId)
-  try {
-    const project = await Project.find({
-      userId,
-    }).sort({ updatedAt: -1 });
-    if (project.length > 0) {
-      return { response: "success", result: project };
-    }
-    //No obtuvo resultados
-    return {
-      response: "error",
-      statusCode: 404,
-      msg: new Error("No se encontraron proyectos creados.").message,
-    };
-  } catch (error) {
-    return { response: "error", error, statusCode: 500 };
-  }
+export const projectRepository = {
+  CREATE_PROJECT: async (newProject) => {
+    return await Project.create(newProject);
+  },
+  GET_PROJECTS: async (userId) => {
+    return await Project.find({ userId }).sort({ createdAt: -1 });
+  },
+  GET_PROJECT_ID: async (projectId) => {
+    return await Project.findById(projectId);
+  },
+  DELETE_PROJECT: async (projectId) => {
+    return await Project.findByIdAndDelete(projectId);
+  },
+  UPDATE_PROJECT: async (updatedProject, projectId) => {
+    return await Project.findByIdAndUpdate(projectId, updatedProject);
+  },
 };
 
 export const getProjectIdRepository = async ({ projectId }, userId) => {
@@ -92,7 +41,6 @@ export const getProjectIdRepository = async ({ projectId }, userId) => {
     };
   }
 };
-
 
 export const updateProjectRepository = async (
   { projectId, projectBody },
