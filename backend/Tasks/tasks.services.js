@@ -1,55 +1,54 @@
+import Project from '../Projects/projects.model.js';
+import User from '../Users/users.model.js';
+import { returnError } from '../helpers/returnError.js';
 import {
     createTaskRepository,
     deleteTaskRepository,
     getTaskIdRepository,
     getTasksRepository,
+    taskRepository,
     updateTaskRepository
 } from './index.js'
+import Task from './tasks.model.js';
 
-export const createTaskService = async (task) => {
-    // se llama a createTaskRepository para crear la tarea en la base de datos, 
-    const response = await createTaskRepository({
-        ...task
-    })
-    // si la respuesta indica que hubo un error, se devuelve un error
-    if (response.response === 'error') {
-        return {
-            error: response
+export const createTaskService = async (newTask, userId) => {
+    try {
+        console.log(userId)
+        const { premium } = await User.findById(userId)
+        const tasks = await Task.find({ projectId: newTask.projectId }) || [];
+        if (!premium && tasks.length >= 4) {
+            return { error: returnError(404, 'El usuario no posee cuenta premium, solo es posible tener 4 tareas.') }
         }
-    }
-    // si la respuesta fue exitosa, se devuelve una respuesta con la tarea correspondiente
-    return {
-        result: response.result
+        const task = await taskRepository.CREATE_TASK(newTask);
+        return { result: task }
+    } catch (error) {
+        return { error: returnError(403, error.message) }
     }
 }
 
-export const getTasksService = async () => {
-    // Llamamos a la función getTasksRepository 
-    const response = await getTasksRepository()
-    // Si la respuesta de getTasksRepository es un error, se devuelve un error
-    if (response.response === 'error') {
-        return {
-            error: response
+
+export const getTasksService = async (projectId) => {
+    try {
+
+        const tasks = await taskRepository.GET_TASKS(projectId);
+        if (!tasks) {
+            return { error: returnError(404, "El Proyecto no tiene tareas.") }
         }
-    }
-    // Si no hay error, devolvemos un objeto con la propiedad result que contiene la lista de tareas
-    return {
-        result: response.result
+        return { result: tasks }
+    } catch (error) {
+        return { error: returnError(403, error.message) }
     }
 }
-
 export const getTaskIdService = async (taskId) => {
-    const response = await getTaskIdRepository(taskId); // Se llama a la función getTaskIdRepository
-
-    // Si la respuesta del repositorio tiene un atributo 'response' igual a 'error', se retorna un objeto con el error
-    if (response.response === 'error') {
-        return {
-            error: response
+    console.log('entre', taskId)
+    try {
+        const task = await taskRepository.GET_TASK_ID(taskId);
+        if (!task) {
+            return { error: returnError(404, `No se ha encontrado la tarea con id ${taskId}`) }
         }
-    }
-
-    return {
-        result: response.result
+        return { result: task }
+    } catch (error) {
+        return { error: returnError(403, error.message) }
     }
 }
 

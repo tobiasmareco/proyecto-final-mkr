@@ -7,6 +7,7 @@ export const validatorCreateTask = [
   check('title').exists().withMessage('El campo titulo es obligatorio.').trim().isLength({
     min: 3
   }).withMessage('El campo titulo debe tener almenos 3 caracteres.'),
+  check('projectId').exists().withMessage('Se require un id de Proyecto'),
   (req, res, next) => {
     try {
       validationResult(req).throw()

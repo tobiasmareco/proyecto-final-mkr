@@ -11,7 +11,7 @@ export const createTaskController = async (req, res) => { // Definimos el contro
     const {
         result,
         error
-    } = await createTaskService(req.body); // Llamamos a la función createTaskService para crear una nueva tarea en la base de datos
+    } = await createTaskService(req.body, req.user); // Llamamos a la función createTaskService para crear una nueva tarea en la base de datos
     if (error) { // Si se produjo un error durante la creación de la tarea
         return res // Enviamos una respuesta al cliente con el código de estado y el mensaje de error correspondiente
             .status(error.statusCode)
@@ -33,7 +33,7 @@ export const getTasksController = async (req, res) => {
     const {
         result,
         error
-    } = await getTasksService()
+    } = await getTasksService(req.params.projectId)
     //Llamamos a la función getTasksService() para obtener todas las tareas existentes en el sistema
     if (error) {
         //Si existe un error, se devuelve un mensaje de error con el código de estado correspondiente.
@@ -43,7 +43,7 @@ export const getTasksController = async (req, res) => {
         })
     }
     //Si todo está bien, se devuelve un mensaje de éxito con el código de estado correspondiente y las tareas obtenidas.
-    return res.status(201).json({
+    return res.status(200).json({
         response: 'success',
         msg: 'Tareas encontradas satisfactoriamente',
         result
@@ -52,6 +52,7 @@ export const getTasksController = async (req, res) => {
 
 export const getTaskIdController = async (req, res) => {
     //Obtenemos el ID de la tarea 
+    console.log('entre')
     const taskId = req.params.id;
 
     //Llamamos a la función getTaskIdService 
@@ -69,7 +70,7 @@ export const getTaskIdController = async (req, res) => {
     }
 
     //Si la búsqueda se realizó con éxito, enviamos una respuesta 
-    return res.status(201).json({
+    return res.status(200).json({
         response: 'success',
         msg: 'Tarea encontrada satisfactoriamente',
         result

@@ -1,6 +1,29 @@
 import Task from './tasks.model.js'
 
 
+export const taskRepository = {
+  CREATE_TASK: async (task) => {
+    return await Task.create(task)
+  },
+  GET_TASKS: async (projectId) => {
+    return await Task.find({ projectId })
+  },
+  GET_TASK_ID: async (taskId) => {
+    return await Task.findById(taskId)
+  },
+  UPDATE_TASK: async (task, projectId) => {
+
+  },
+  DELETE_TASK: async (taskId, projectId) => {
+
+  }
+}
+
+
+
+
+
+
 export const createTaskRepository = async ({
   title,
   description,

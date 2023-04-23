@@ -7,12 +7,13 @@ import {
   updateTaskController,
 } from "../Tasks/index.js";
 import { validatorCreateTask } from "./tasks.validator.js";
+import { checkLogin } from "../helpers/checkLogin.js";
 const tasksRoutes = express.Router();
 
-tasksRoutes.get("/", getTasksController);
-tasksRoutes.get("/:id", getTaskIdController);
-tasksRoutes.post("/", validatorCreateTask, createTaskController);
-tasksRoutes.put("/:id", updateTaskController);
-tasksRoutes.delete("/:id", deleteTaskController);
+tasksRoutes.get("/:projectId", checkLogin, getTasksController);
+tasksRoutes.get("/:id", checkLogin, getTaskIdController);
+tasksRoutes.post("/", checkLogin, validatorCreateTask, createTaskController);
+tasksRoutes.put("/:id", checkLogin, updateTaskController);
+tasksRoutes.delete("/:id", checkLogin, deleteTaskController);
 
 export default tasksRoutes;

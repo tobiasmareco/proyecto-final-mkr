@@ -2,6 +2,7 @@ import Project from "./projects.model.js";
 import User from "../Users/users.model.js";
 import { returnError } from "../helpers/returnError.js";
 import { projectRepository } from "./index.js";
+import Task from "../Tasks/tasks.model.js";
 
 export const createProjectService = async (project, userId) => {
   try {
@@ -42,17 +43,6 @@ export const getProjectsService = async (userId) => {
     return { error: returnError(403, error.message) };
   }
 };
-
-// export const getProjectIdService = async (project, userId) => {
-//   const response = await getProjectIdRepository(
-//     { ...project, projectId: project },
-//     userId
-//   );
-//   if (response.response === "error") {
-//     return { error: response };
-//   }
-//   return { result: response.result };
-// };
 
 export const getProjectIdService = async (projectId) => {
   try {
@@ -101,6 +91,7 @@ export const deleteProjectService = async (projectId) => {
       };
     }
     const deleteProject = await projectRepository.DELETE_PROJECT(projectId);
+    const deleteTasks = await Task.deleteMany({projectId})
     return { result: deleteProject };
   } catch (error) {
     return { error: returnError(403, error.message) };
