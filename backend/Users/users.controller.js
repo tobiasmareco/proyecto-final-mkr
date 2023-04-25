@@ -1,25 +1,81 @@
-import { createUserService } from './index.js'
+import {
+  createUserService,
+  deleteUserService,
+  getUserIdService,
+  getUsersService,
+  updateUserService,
+} from "./index.js";
 
 export const createUserController = async (req, res) => {
-  const { result, error } = await createUserService(req.body)
+  const { result, error } = await createUserService(req.body);
   if (error) {
-    return res.status(error.statusCode).json({ response: error.response, msg: error.msg })
+    return res
+      .status(error.statusCode)
+      .json({ response: error.response, msg: error.msg });
   }
-  return res.status(201).json({ response: 'success', msg: 'Usuario creado correctamente, verifique su correo para activar la cuenta.', result })
-}
+  return res.status(201).json({
+    response: "success",
+    msg: "Usuario creado correctamente, verifique su correo para activar la cuenta.",
+    result,
+  });
+};
 
 export const getUsersController = async (req, res) => {
-  return res.send('from get usercontroller')
-}
+  const { result, error } = await getUsersService();
+  if (error) {
+    return res.status(error.statusCode).json({
+      response: error.response,
+      msg: error.msg,
+    });
+  }
+  return res.status(200).json({
+    response: "success",
+    msg: "Se han obtenido los usuarios.",
+    result,
+  });
+};
 
 export const getUserIdController = async (req, res) => {
-  return res.send('from get useridcontroller')
-}
+  const { result, error } = await getUserIdService(req.params.id);
+  if (error) {
+    return res.status(error.statusCode).json({
+      response: error.response,
+      msg: error.msg,
+    });
+  }
+  return res.status(200).json({
+    response: "success",
+    msg: "Se ha obtenido el usuario.",
+    result,
+  });
+};
 
 export const updateUserController = async (req, res) => {
-  return res.send('from put usercontroller')
-}
+  const { result, error } = await updateUserService(req.body, req.params.id);
+  if (error) {
+    return res.status(error.statusCode).json({
+      response: error.response,
+      msg: error.msg,
+    });
+  }
+  return res.status(200).json({
+    response: "success",
+    msg: "Se han actualizado los datos del usuario.",
+    result,
+  });
+};
 
 export const deleteUserController = async (req, res) => {
-  return res.send('from delete usercontroller')
-}
+  const { result, error } = await deleteUserService(req.params.id);
+  if (error) {
+    return res.status(error.statusCode).json({
+      response: error.response,
+      msg: error.msg,
+    });
+  }
+  return res.status(200).json({
+    response: "success",
+    msg: "Se ha eliminado el usuario.",
+    result,
+  });
+};
