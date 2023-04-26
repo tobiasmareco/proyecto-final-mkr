@@ -24,7 +24,9 @@ export const getProjectsController = async (req, res) => {
   console.log(req.user);
   const { result, error } = await getProjectsService(req.user);
   if (error) {
-    return res.status(error.statusCode).json({ response: "error", msg: error });
+    return res
+      .status(error.statusCode)
+      .json({ response: "error", msg: error.msg });
   }
   return res.status(200).json({
     response: "success",

@@ -35,8 +35,8 @@ export const createProjectService = async (project, userId) => {
 export const getProjectsService = async (userId) => {
   try {
     const projects = await projectRepository.GET_PROJECTS(userId);
-    if (!projects) {
-      return { error: returnError(400, "No hay proyectos creados.") };
+    if (!projects || projects.length < 1) {
+      return { error: returnError(404, "No hay proyectos creados.") };
     }
     return { result: projects };
   } catch (error) {
@@ -91,7 +91,7 @@ export const deleteProjectService = async (projectId) => {
       };
     }
     const deleteProject = await projectRepository.DELETE_PROJECT(projectId);
-    const deleteTasks = await Task.deleteMany({projectId})
+    const deleteTasks = await Task.deleteMany({ projectId });
     return { result: deleteProject };
   } catch (error) {
     return { error: returnError(403, error.message) };

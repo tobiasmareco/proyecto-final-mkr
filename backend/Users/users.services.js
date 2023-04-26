@@ -1,6 +1,8 @@
 import { returnError } from "../helpers/returnError.js";
+import { Send } from "../helpers/sendMail.js";
 import User from "./users.model.js";
 import { userRepository } from "./users.repository.js";
+
 export const createUserService = async (user) => {
   try {
     const userExist = await User.findOne({ email: user.email });
@@ -8,6 +10,14 @@ export const createUserService = async (user) => {
       return { error: returnError(404, `Ya existe el email registrado.`) };
     }
     const userCreated = await userRepository.CREATE_USER(user);
+    await Send(
+      email,
+      "Confirm Account",
+      emailMessages.REGISTER_MESSAGE(
+        email,
+        `http://localhost:${process.env.API_SERVER_PORT}/auth/confirm-account/${userCreated.token}`
+      )
+    );
     return { result: userCreated };
   } catch (error) {
     return { error: returnError(403, error.message) };
