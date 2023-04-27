@@ -6,19 +6,22 @@ import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import ConfirmAccount from "./pages/Auth/ConfirmAccount";
 import Dashboard from "./pages/Main/Dashboard";
+import { AuthProvider } from './context/AuthProvider'
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AuthLayout />}>
-          <Route index element={<Login />} />
-          <Route path='register' element={<Register />} />
-          <Route path="confirm-account/:tokenId" element={<ConfirmAccount />} />
-          <Route path="forgot-password" element={<ForgotPassword />} />
-          <Route path="forgot-password/:token" element={<ResetPassword />} />
-        </Route>
-        <Route path='/projects' element={<Dashboard/>}></Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<AuthLayout />}>
+            <Route index element={<Login />} />
+            <Route path='register' element={<Register />} />
+            <Route path="confirm-account/:tokenId" element={<ConfirmAccount />} />
+            <Route path="forgot-password" element={<ForgotPassword />} />
+            <Route path="forgot-password/:token" element={<ResetPassword />} />
+          </Route>
+          <Route path='/projects' element={<Dashboard />}></Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter >
   )
 }
