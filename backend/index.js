@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 dotenv.config();
 import { conectDatabase } from "./config/conectDatabase.js";
 import projectsRoute from "./Projects/projects.routes.js";
@@ -13,6 +14,7 @@ conectDatabase();
 
 //~Habilitar JSON-EXPRESSS - CORS.
 app.use(express.json());
+app.use(cors());
 
 //~Rutas de la Aplicacion.
 app.use("/auth", authRoutes);
