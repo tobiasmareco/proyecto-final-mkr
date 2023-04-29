@@ -15,5 +15,4 @@ usersRoutes.get("/:id", checkLogin, getUserIdController);
 usersRoutes.post("/", checkLogin, validateCreateUser, createUserController);
 usersRoutes.put("/:id", checkLogin, updateUserController);
 usersRoutes.delete("/:id", checkLogin, deleteUserController);
-
 export default usersRoutes;

@@ -79,3 +79,11 @@ export const deleteUserController = async (req, res) => {
     result,
   });
 };
+
+//USER PROFILE
+export const getUserProfileController = async (req, res) => {
+  console.log("llegue a perfil controllwer");
+  const { user } = req;
+  console.log(user);
+  res.json(user);
+};

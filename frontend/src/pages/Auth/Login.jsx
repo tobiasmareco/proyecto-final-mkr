@@ -2,28 +2,45 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axiosClient from "../../config/axiosClient";
 import AlertMsg from "../../components/Alert";
+import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [alert, setAlert] = useState({});
+  const [errors, setErrors] = useState([]);
+  const { setAuth } = useAuth();
   const handleSubmit = async (e) => {
+    setErrors([]);
     e.preventDefault();
     if ([email.trim(), password.trim()].includes("")) {
-      setAlert({
-        msg: "Todos los campos son obligatorios",
-        error: false,
-      });
+      return setErrors([
+        { msg: "Complete los campos obligatorios.", error: true },
+      ]);
     }
     try {
-    } catch (error) {}
+      const { data } = await axiosClient.post("/auth", { email, password });
+      console.log(data, " as result of data fetch");
+      setErrors([]);
+      localStorage.setItem("token", data?.tokenSession);
+      setAuth({ _id: data.user._id, email: data.user.email });
+    } catch (error) {
+      if (error.response.data.errors) {
+        setErrors(error.response.data.errors);
+      } else {
+        setErrors([{ msg: error.response?.data?.msg, error: true }]);
+      }
+    }
   };
-
-  const { msg } = alert;
 
   return (
     <>
-      {msg && <AlertMsg alert={alert} />}
+      {errors?.length > 0 &&
+        errors.map((err) => {
+          // console.log(err); se renderiza cada momento...verificar.
+          return (
+            <AlertMsg alert={{ msg: err.msg, error: true }} key={err.msg} />
+          );
+        })}
       <div className="bg-white shadow-xl max-w-md mx-auto py-3 px-5 rounded-sm">
         <h1 className="text-sky-800 font-bold text-3xl uppercase text text-center">
           Login
