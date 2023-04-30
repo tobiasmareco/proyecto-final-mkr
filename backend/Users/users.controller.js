@@ -1,3 +1,4 @@
+import { returnError } from "../helpers/returnError.js";
 import {
   createUserService,
   deleteUserService,
@@ -5,6 +6,7 @@ import {
   getUsersService,
   updateUserService,
 } from "./index.js";
+import User from "./users.model.js";
 
 export const createUserController = async (req, res) => {
   const { result, error } = await createUserService(req.body);
@@ -82,8 +84,10 @@ export const deleteUserController = async (req, res) => {
 
 //USER PROFILE
 export const getUserProfileController = async (req, res) => {
-  console.log("llegue a perfil controllwer");
   const { user } = req;
-  console.log(user);
-  res.json(user);
+  const {_id,email,name} = await User.findById(user)
+  if(!_id){
+    return returnError(404,`No existe usuario con id ${user}`)
+  }
+  return res.status(200).json({response:'success',result:{_id,email,name}})
 };

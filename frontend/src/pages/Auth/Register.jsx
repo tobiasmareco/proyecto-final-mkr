@@ -1,18 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import axiosClient from '../../config/axiosClient'
 
 function Register() {
-  const handleRegisterClick = async (e) => {
-    e.preventDefault()
-    //TODO: VALIDAR LOS CAMPOS VACIOS Y CORRECTOS.
-    try {
-      const { data } = await axiosClient.post(`/auth/register`, { name: 'Vanessa Gomez', email: 'vgomez@laboratorioscatedral.com.py', password: '123123' })
-      console.log(data)
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPass, setConfirmPass] = useState('')
 
-    } catch (error) {
-      console.log(error.response.data)
-    }
+  const handleSubmit = async()=>{
+    e.preventDefault()
   }
   return (
     <>

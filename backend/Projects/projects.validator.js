@@ -8,7 +8,8 @@ export const validatorCreateProject = [
       validationResult(req).throw()
       next()
     } catch (error) {
-      return res.status(400).json({ response: 'error', errors: error.array() })
+      // return res.status(400).json({ response: 'error', errors: error.array() })
+      return res.status(400).json({response:'error',error:error.array()[0]})
     }
   }
 ]
@@ -21,7 +22,8 @@ export const validatorUpdateProject = [
       validationResult(req).throw()
       next()
     } catch (error) {
-      return res.status(400).json({ response: 'error', errors: error.array() })
+      // return res.status(400).json({ response: 'error', errors: error.array() })
+      return res.status(400).json({response:'error',error:error.array()[0]})
     }
   }
 ]

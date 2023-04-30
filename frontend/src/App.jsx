@@ -1,12 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import AuthLayout from "./layouts/AuthLayout";
 import Login from "./pages/Auth/Login";
 import Register from "./pages/Auth/Register";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
 import ResetPassword from "./pages/Auth/ResetPassword";
 import ConfirmAccount from "./pages/Auth/ConfirmAccount";
-import Dashboard from "./pages/Main/Dashboard";
 import { AuthProvider } from './context/AuthProvider'
+
+import MainLayout from "./layouts/MainLayout";
+import Projects from "./pages/Main/Projects";
+import CreateProject from "./pages/Main/CreateProject";
 function App() {
   return (
     <BrowserRouter>
@@ -19,7 +23,10 @@ function App() {
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="forgot-password/:token" element={<ResetPassword />} />
           </Route>
-          <Route path='/projects' element={<Dashboard />}></Route>
+          <Route path='/projects' element={<MainLayout />}>
+            <Route index element={<Projects />}/>
+            <Route path="create-project" element={<CreateProject />}/>
+          </Route>
         </Routes>
       </AuthProvider>
     </BrowserRouter >

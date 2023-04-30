@@ -5,10 +5,12 @@ import AlertMsg from "../../components/Alert";
 import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("admin@gmail.com");
+  const [password, setPassword] = useState("123123");
   const [errors, setErrors] = useState([]);
   const { setAuth } = useAuth();
+
+  //- SUBMIT DATA - HERE...
   const handleSubmit = async (e) => {
     setErrors([]);
     e.preventDefault();
@@ -19,7 +21,6 @@ function Login() {
     }
     try {
       const { data } = await axiosClient.post("/auth", { email, password });
-      console.log(data, " as result of data fetch");
       setErrors([]);
       localStorage.setItem("token", data?.tokenSession);
       setAuth({ _id: data.user._id, email: data.user.email });
