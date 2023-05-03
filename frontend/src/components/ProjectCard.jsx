@@ -1,28 +1,40 @@
 import React from "react";
+import { Link } from "react-router-dom";
+const IMAGE_DEFAULT =
+  "https://retaintechnologies.com/wp-content/uploads/2020/04/Project-Management-Mantenimiento-1.jpg";
 
-function ProjectCard() {
+function ProjectCard({ project }) {
+  const { _id, title, description, createdAt, finishDate, image } = project;
+
   return (
     <>
-      <div className="border border-gray-400/25 p-3 rounded-lg shadow-md">
+      <div className="border border-gray-400/25 p-2 rounded-lg shadow-md">
         <div className="grid grid-cols-3 gap-3 ">
           <img
-            src="https://via.placeholder.com/800x600"
+            src={image ? image : IMAGE_DEFAULT}
             alt="image"
-            className="cover col-span-2 w-full h-full p-5"
+            className="object-cover object-center col-span-2 w-full h-full p-2 rounded-2xl"
           />
-          <div className="flex flex-col gap-3 justify-between py-5">
+          <div className="flex flex-col gap-2 justify-between py-3">
             <div>
-              <p>CREADO EL:</p>
-              <span className="italic font-bold text-sm">13/03/2023</span>
-              <p>FECHA FINAL:</p>
-              <span className="italic font-bold text-sm">13/03/2023</span>
+              <p className="text-xs">Creado el:</p>
+              <span className="font-bold text-xs">{createdAt}</span>
+              <p className="text-xs">Fecha fin:</p>
+              <span className="font-bold text-xs">{finishDate}</span>
             </div>
-            <button>Opciones</button>
+            <Link
+              to={_id}
+              className="text-center text-sm bg-sky-800 font-bold rounded-md text-white hover:bg-sky-700 transition-colors px-3"
+            >
+              Detalles
+            </Link>
           </div>
         </div>
         <div>
-          <h2>Title of project</h2>
-          <p>description of project its here</p>
+          <h2 className="text-center font-bold text-xl">{title}</h2>
+          <p className="text-gray-500 text-center hover:text-gray-700 text-sm">
+            {description}
+          </p>
         </div>
       </div>
     </>

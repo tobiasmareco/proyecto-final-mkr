@@ -24,6 +24,7 @@ export const createProjectService = async (project, userId) => {
     }
     const createdProject = await projectRepository.CREATE_PROJECT({
       ...project,
+      finishDate: Date.now(),
       userId,
     });
     return { result: createdProject };
