@@ -21,7 +21,6 @@ export const createProjectController = async (req, res) => {
 };
 
 export const getProjectsController = async (req, res) => {
-  console.log(req.user);
   const { result, error } = await getProjectsService(req.user);
   if (error) {
     return res

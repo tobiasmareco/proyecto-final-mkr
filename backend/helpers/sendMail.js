@@ -20,13 +20,12 @@ export async function Send(userEmail, subject, html) {
       subject,
       html,
     },
-    (err, res) => (err ? console.log({ errmsms: err }) : console.log(res))
+    (err) => err && console.log({ errmsms: err })
   );
 }
 
 export const emailMessages = {
   REGISTER_MESSAGE: (userEmail, linkAcountActivate) => {
-    console.log(userEmail, linkAcountActivate);
     const title = "ProTaskManagment";
     return `<!DOCTYPE html>
         <html lang="en">

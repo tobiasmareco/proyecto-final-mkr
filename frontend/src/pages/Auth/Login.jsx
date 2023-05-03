@@ -25,7 +25,7 @@ function Login() {
       localStorage.setItem("token", data?.tokenSession);
       setAuth({ _id: data.user._id, email: data.user.email });
     } catch (error) {
-      if (error.response.data.errors) {
+      if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
       } else {
         setErrors([{ msg: error.response?.data?.msg, error: true }]);

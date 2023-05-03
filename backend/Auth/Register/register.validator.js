@@ -22,7 +22,9 @@ export const validateRegister = [
       validationResult(req).throw();
       return next();
     } catch (error) {
-      return res.status(403).json({ response: "error", errors: error.array() });
+      return res
+        .status(403)
+        .json({ response: "error", errors: error.array()[0] });
     }
   },
 ];

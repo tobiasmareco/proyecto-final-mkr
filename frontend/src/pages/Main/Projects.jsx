@@ -1,8 +1,7 @@
-import React from 'react'
+import React from "react";
+import ProjectsComp from "../../components/ProjectsComp";
 function Projects() {
-  return (
-    <div>Projects</div>
-  )
+  return <ProjectsComp />;
 }
 
-export default Projects
+export default Projects;
