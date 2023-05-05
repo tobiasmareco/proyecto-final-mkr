@@ -13,7 +13,7 @@ function ProjectCard({ project }) {
           <img
             src={image ? image : IMAGE_DEFAULT}
             alt="image"
-            className="object-cover object-center col-span-2 w-full h-full p-2 rounded-2xl"
+            className="object-cover object-center col-span-2 p-2 rounded-2xl w-full h-40"
           />
           <div className="flex flex-col gap-2 justify-between py-3">
             <div>
