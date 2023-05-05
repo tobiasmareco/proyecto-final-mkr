@@ -1,7 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Header() {
+  const Navigate = useNavigate();
+  const handleSessionClose = () => {
+    localStorage.removeItem("token");
+    return Navigate("/");
+  };
   return (
     <header className="px-4 py-5 bg-sky-800 text-white border-b">
       <div className="md:flex md:justify-between">
@@ -10,7 +15,10 @@ function Header() {
           <Link to={"/projects"} className="">
             Proyectos
           </Link>
-          <button className="bg-white text-black px-5 py-1 rounded-md hover:bg-sky-600 hover:text-gray-100 transition-colors font-bold">
+          <button
+            className="bg-white text-black px-5 py-1 rounded-md hover:bg-sky-600 hover:text-gray-100 transition-colors font-bold"
+            onClick={handleSessionClose}
+          >
             Cerrar Sesion
           </button>
         </div>

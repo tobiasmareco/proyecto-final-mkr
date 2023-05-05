@@ -6,15 +6,15 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
-  const [loading, setLoading] = useState(true)
-  const Navigate = useNavigate()
+  const [loading, setLoading] = useState(true);
+  const Navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setLoading(false)
-      return
-    };
+      setLoading(false);
+      return;
+    }
     const authUser = async () => {
       const config = {
         headers: {
@@ -25,20 +25,18 @@ const AuthProvider = ({ children }) => {
       try {
         const { data } = await axiosClient.get("/api/profile", config);
         if (!data) {
-          return //verificar como mandar un error luego 
+          return; //verificar como mandar un error luego
         }
-        setAuth(data.result)
-        Navigate('/projects')
-
+        setAuth(data.result);
+        Navigate("/projects");
       } catch (error) {
-        setAuth({})
+        setAuth({});
       }
-      setLoading(false)
+      setLoading(false);
     };
     authUser();
   }, []);
 
-  console.log(auth, "initial auth");
   return (
     <AuthContext.Provider value={{ auth, setAuth, loading }}>
       {children}

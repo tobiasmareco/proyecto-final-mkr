@@ -18,9 +18,13 @@ function ProjectCard({ project }) {
           <div className="flex flex-col gap-2 justify-between py-3">
             <div>
               <p className="text-xs">Creado el:</p>
-              <span className="font-bold text-xs">{createdAt}</span>
+              <span className="font-bold text-xs">
+                {createdAt.split("T")[0]}
+              </span>
               <p className="text-xs">Fecha fin:</p>
-              <span className="font-bold text-xs">{finishDate}</span>
+              <span className="font-bold text-xs">
+                {finishDate.split("T")[0]}
+              </span>
             </div>
             <Link
               to={_id}

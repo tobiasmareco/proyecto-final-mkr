@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../config/axiosClient";
 import AlertMsg from "../../components/Alert";
 import { useAuth } from "../../hooks/useAuth";
@@ -9,7 +9,7 @@ function Login() {
   const [password, setPassword] = useState("123123");
   const [errors, setErrors] = useState([]);
   const { setAuth } = useAuth();
-
+  const Navigate = useNavigate();
   //- SUBMIT DATA - HERE...
   const handleSubmit = async (e) => {
     setErrors([]);
@@ -24,6 +24,7 @@ function Login() {
       setErrors([]);
       localStorage.setItem("token", data?.tokenSession);
       setAuth({ _id: data.user._id, email: data.user.email });
+      Navigate("/projects");
     } catch (error) {
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);

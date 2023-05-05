@@ -12,6 +12,7 @@ import MainLayout from "./layouts/MainLayout";
 import Projects from "./pages/Main/Projects";
 import CreateProject from "./pages/Main/CreateProject";
 import ProjectId from "./components/ProjectId";
+import EditProjects from "./pages/Main/EditProjects";
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +32,7 @@ function App() {
             <Route index element={<Projects />} />
             <Route path="create-project" element={<CreateProject />} />
             <Route path=":id" element={<ProjectId />} />
+            <Route path="edit/:id" element={<EditProjects />} />
           </Route>
         </Routes>
       </AuthProvider>
