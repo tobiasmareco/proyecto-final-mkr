@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../config/axiosClient";
 import { RiAddBoxFill, RiDeleteBin2Fill, RiEdit2Fill } from "react-icons/ri";
 
@@ -16,7 +16,15 @@ function ProjectId() {
   const [loading, setLoading] = useState(true);
   const [project, setProject] = useState({});
   const [tasks, setTasks] = useState([]);
-
+  const Navigate = useNavigate();
+  const handleDelete = () => {
+    try {
+      const { data } = axiosClient.delete(`/api/projects/${id}`, config);
+      Navigate("/projects");
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
   useEffect(() => {
     const getProject = async (id) => {
       try {
@@ -57,24 +65,24 @@ function ProjectId() {
                   <RiEdit2Fill />
                   Editar
                 </Link>
-                <Link
+                <button
                   className="flex gap-1 items-center hover:text-red-600 hover:border-black border px-2 py-1 rounded-md font-bold text-red-800 transition-colors"
-                  to={`/projects/edit/${id}`}
+                  onClick={handleDelete}
                 >
                   <RiDeleteBin2Fill />
                   Eliminar Proyecto
-                </Link>
+                </button>
               </div>
             </div>
             <section>
               <div className="w-full bg-red-400]">
                 <Link
                   className="flex gap-1 items-center hover:text-sky-600 hover:border-black  rounded-md font-bold text-sky-800 transition-colors"
-                  to={`/projects/edit/${id}`}
+                  to={`create-task/${id}`}
                 >
                   <RiAddBoxFill />
                   Agregar tareas
-                </Link>{" "}
+                </Link>
               </div>
               {tasks?.length > 0 ? (
                 <h1>Hay tareas</h1>

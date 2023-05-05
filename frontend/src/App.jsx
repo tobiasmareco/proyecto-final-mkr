@@ -13,6 +13,7 @@ import Projects from "./pages/Main/Projects";
 import CreateProject from "./pages/Main/CreateProject";
 import ProjectId from "./components/ProjectId";
 import EditProjects from "./pages/Main/EditProjects";
+import CreateTaskComp from "./components/CreateTaskComp";
 function App() {
   return (
     <BrowserRouter>
@@ -27,6 +28,7 @@ function App() {
             />
             <Route path="forgot-password" element={<ForgotPassword />} />
             <Route path="forgot-password/:token" element={<ResetPassword />} />
+            <Route path="reset-password/:token" element={<ResetPassword />} />
           </Route>
           <Route path="/projects" element={<MainLayout />}>
             <Route index element={<Projects />} />

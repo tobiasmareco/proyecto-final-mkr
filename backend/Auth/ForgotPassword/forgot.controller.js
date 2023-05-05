@@ -17,6 +17,14 @@ export const forgotController = async (req, res) => {
     await user.save();
 
     //!ENVIAR EMAIL AQUI PARA REESTABLECER CONTRASENA.
+    await Send(
+      email,
+      "Change Password",
+      emailMessages.REGISTER_MESSAGE(
+        email,
+        `${FRONT_END_URL}/reset-password/${user.token}`
+      )
+    );
     return res.status(200).json({
       reponse: "success",
       msg: "Se ha enviado un email con las instrucciones para reestablecer la contrasena.",
