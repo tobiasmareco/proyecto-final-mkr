@@ -1,3 +1,6 @@
+import Swal from 'sweetalert2';
+MySwal= withReactContent(Swal);
+
 const publishablekey='pk_test_51N4DhbGkt4TEGAhYie8YtlBnA2iraPRAdVvT8FwVs0ChmQpjlpdRFaKFGuGsGrczuKcQHWMAZ4fX7P05Tktyzmjr000fZgL1a1'
 const [product, setProduct]=useState({
     name: 'Premium',
