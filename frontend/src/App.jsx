@@ -35,6 +35,7 @@ function App() {
             <Route path="create-project" element={<CreateProject />} />
             <Route path=":id" element={<ProjectId />} />
             <Route path="edit/:id" element={<EditProjects />} />
+            <Route path="create-task/:id" element={<CreateTaskComp />} />
           </Route>
         </Routes>
       </AuthProvider>

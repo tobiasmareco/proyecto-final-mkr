@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import axiosClient from "../config/axiosClient";
 import { RiAddBoxFill, RiDeleteBin2Fill, RiEdit2Fill } from "react-icons/ri";
+import TasksCard from "./TasksCard";
 
 const token = localStorage.getItem("token");
 const config = {
@@ -17,9 +18,9 @@ function ProjectId() {
   const [project, setProject] = useState({});
   const [tasks, setTasks] = useState([]);
   const Navigate = useNavigate();
-  const handleDelete = () => {
+  const handleDelete = async () => {
     try {
-      const { data } = axiosClient.delete(`/api/projects/${id}`, config);
+      const { data } = await axiosClient.delete(`/api/projects/${id}`, config);
       Navigate("/projects");
     } catch (error) {
       console.log(error.response);
@@ -75,19 +76,21 @@ function ProjectId() {
               </div>
             </div>
             <section>
-              <div className="w-full bg-red-400]">
+              <div className="w-full">
                 <Link
                   className="flex gap-1 items-center hover:text-sky-600 hover:border-black  rounded-md font-bold text-sky-800 transition-colors"
-                  to={`create-task/${id}`}
+                  to={`/projects/create-task/${id}`}
                 >
                   <RiAddBoxFill />
                   Agregar tareas
                 </Link>
               </div>
               {tasks?.length > 0 ? (
-                <h1>Hay tareas</h1>
+                tasks.map(tsk =>(
+                  <TasksCard task={tsk} key={tsk._id}/>
+                ))
               ) : (
-                <h2>No existen tareas creadas.</h2>
+                <h2 className="font-bold text-xl mt-3">No existen tareas creadas.</h2>
               )}
             </section>
           </>
