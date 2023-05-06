@@ -1,8 +1,8 @@
 import React from "react";
-import EditProjectComp from "../../components/EditProjectComp";
+import EditProjectsComponent from "../../components/ProjectsComponents/EditProjects";
 
 function EditProjects() {
-  return <EditProjectComp />;
+  return <EditProjectsComponent />;
 }
 
 export default EditProjects;

@@ -32,7 +32,7 @@ const AuthProvider = ({ children }) => {
           return; //verificar como mandar un error luego
         }
         setAuth(data.result);
-        Navigate("/projects");
+        // Navigate("/projects");
       } catch (error) {
         setAuth({});
       }

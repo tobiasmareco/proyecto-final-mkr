@@ -29,7 +29,37 @@ function ProjectProvider({ children }) {
   }
 
   //INTERACTION API
-  const createProject = async (project) => {
+
+  const editProject = async project => {
+    try {
+      const token = localStorage.getItem("token");
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      const { data } = await axiosClient.put(`/api/projects/${project.id}`, project, config)
+      setAlert({
+        msg: data.msg,
+        error: false
+      })
+
+      const updatedProject = projects.map(projectState => projectState._id === data.result._id ? data.result : projectState)
+      setProjects(updatedProject)
+      setTimeout(() => {
+        setAlert({});
+        navigate(PROJECTS_ROUTE);
+      }, [1500])
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true
+      })
+    }
+  }
+
+  const createNewProject = async project => {
     try {
       const token = localStorage.getItem("token");
       const config = {
@@ -56,6 +86,15 @@ function ProjectProvider({ children }) {
     }
   }
 
+  const createProject = async (project) => {
+    if (project.id) {
+      editProject(project)
+    } else {
+      createNewProject(project)
+    }
+    return
+  }
+
   //OBTENER TODOS LOS PROYECTOS
   useEffect(() => {
     const getAllProjects = async () => {
@@ -65,6 +104,7 @@ function ProjectProvider({ children }) {
         setLoading(false)
       } catch (error) {
         console.log(error.response)
+        setLoading(false)
       }
     }
     getAllProjects()

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import useProjects from '../../hooks/useProjects'
 import AlertMsg from '../Alert'
+import { useParams } from 'react-router-dom';
 
 const IMAGE_DEFAULT =
   "https://retaintechnologies.com/wp-content/uploads/2020/04/Project-Management-Mantenimiento-1.jpg";
@@ -14,6 +15,20 @@ function CreateProjectsComponent() {
   //alert
   const { alert, showAlert, createProject } = useProjects()
 
+  //Edit proyect
+  const [id, setId] = useState(null)
+  const params = useParams()
+  const { project } = useProjects()
+  useEffect(() => {
+    if (params.id && project.title) {
+      setId(project._id)
+      setTitle(project.title)
+      setDescription(project.description)
+      setFinishDate(project.finishDate?.split('T')[0])
+      setImage(project.image)
+    }
+  }, [params])
+
   const onSubmit = async (e) => {
     e.preventDefault()
     if ([title, description].includes('')) {
@@ -23,8 +38,8 @@ function CreateProjectsComponent() {
       })
     }
 
-    await createProject({ title, description, image: image || IMAGE_DEFAULT, finishDate: finishDate || Date.now() })
-
+    await createProject({ id, title, description, image: image || IMAGE_DEFAULT, finishDate: finishDate || Date.now() })
+    setId(null)
     setTitle('')
     setDescription('')
     setImage('')
@@ -38,6 +53,7 @@ function CreateProjectsComponent() {
       {msg && (
         <AlertMsg alert={alert} />
       )}
+      {!params.id && <h2 className="mb-3 text-3xl font-extrabold text-center">Crear Proyecto</h2>}
       <form onSubmit={onSubmit} className='m-auto max-w-xl'>
         <div className="mb-5">
           <label
@@ -92,18 +108,21 @@ function CreateProjectsComponent() {
         </div>
 
         <div className="mb-5">
+          {project.image && (
+            <img src={project.image} alt={project.title} />
+          )}
           <input
             type="file"
             id="image"
             name="image"
-            onChange={(e) => setImage(e.target.value)}
+            onChange={(e) => setImage(e.target.files[0])}
             className="border w-full p-2 mt-2 placeholder-gray-400 rounded-md"
           />
         </div>
         <input
           type="submit"
-          value={"Crear Proyecto"}
-          className="bg-sky-600 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors"
+          value={id ? "Actualizar Proyecto" : "Crear Proyecto"}
+          className="bg-sky-800 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-600 transition-colors"
         />
       </form >
     </>
