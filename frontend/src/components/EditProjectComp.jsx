@@ -1,6 +1,5 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import CreateProjectComp from "./CreateProjectComp";
 
 function EditProjectComp() {
   const { id } = useParams();

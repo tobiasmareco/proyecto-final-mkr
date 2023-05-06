@@ -1,7 +1,7 @@
 import React from "react";
-import ProjectsComp from "../../components/ProjectsComp";
+import ProjectsComponent from "../../components/ProjectsComponents/Projects";
 function Projects() {
-  return <ProjectsComp />;
+  return <ProjectsComponent />;
 }
 
 export default Projects;

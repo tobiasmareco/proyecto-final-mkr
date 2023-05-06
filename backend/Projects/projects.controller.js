@@ -29,7 +29,6 @@ export const getProjectsController = async (req, res) => {
   }
   return res.status(200).json({
     response: "success",
-    msg: "Proyectos encontrados satisfactoriamente",
     result,
   });
 };
@@ -43,7 +42,6 @@ export const getProjectIdController = async (req, res) => {
   }
   return res.status(200).json({
     response: "success",
-    msg: "Proyecto  encontrado satisfactoriamente",
     result,
   });
 };

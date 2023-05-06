@@ -5,16 +5,19 @@ axiosClient;
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+
   const [auth, setAuth] = useState({});
   const [loading, setLoading] = useState(true);
   const Navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+
     if (!token) {
       setLoading(false);
       return;
     }
+
     const authUser = async () => {
       const config = {
         headers: {
@@ -22,6 +25,7 @@ const AuthProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       };
+
       try {
         const { data } = await axiosClient.get("/api/profile", config);
         if (!data) {
@@ -34,7 +38,9 @@ const AuthProvider = ({ children }) => {
       }
       setLoading(false);
     };
+
     authUser();
+    
   }, []);
 
   return (

@@ -1,6 +1,7 @@
-import ProjectCard from "./ProjectCard";
-import useProjects from "../hooks/useProjects";
-function ProjectsComp() {
+import useProjects from "../../hooks/useProjects";
+import ProjectsCard from "./ProjectsCard";
+
+function ProjectsComponent() {
   //   const [projects, setProjects] = useState([]);
   const { projects, loading } = useProjects();
   return (
@@ -12,7 +13,8 @@ function ProjectsComp() {
         <div className="grid lg:grid-cols-3 grid-col-1 gap-3">
           {projects.length > 0 ? (
             projects.map((project) => (
-              <ProjectCard project={project} key={project._id} />
+              <ProjectsCard
+                project={project} key={project._id} />
             ))
           ) : (
             <h3 className="text-center m-auto col-span-full text-xl font-bold">
@@ -25,4 +27,4 @@ function ProjectsComp() {
   );
 }
 
-export default ProjectsComp;
+export default ProjectsComponent;

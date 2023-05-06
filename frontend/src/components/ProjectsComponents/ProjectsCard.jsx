@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-const IMAGE_DEFAULT =
-  "https://retaintechnologies.com/wp-content/uploads/2020/04/Project-Management-Mantenimiento-1.jpg";
 
-function ProjectCard({ project }) {
+function ProjectsCard({ project }) {
   const { _id, title, description, createdAt, finishDate, image } = project;
 
   return (
@@ -11,8 +9,8 @@ function ProjectCard({ project }) {
       <div className="border border-gray-400/25 p-2 rounded-lg shadow-md">
         <div className="grid grid-cols-3 gap-3 ">
           <img
-            src={image ? image : IMAGE_DEFAULT}
-            alt="image"
+            src={image}
+            alt={`${title}/image`}
             className="object-cover object-center col-span-2 p-2 rounded-2xl w-full h-40"
           />
           <div className="flex flex-col gap-2 justify-between py-3">
@@ -45,4 +43,4 @@ function ProjectCard({ project }) {
   );
 }
 
-export default ProjectCard;
+export default ProjectsCard;

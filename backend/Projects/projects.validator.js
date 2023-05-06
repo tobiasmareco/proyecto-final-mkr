@@ -9,7 +9,7 @@ export const validatorCreateProject = [
       next()
     } catch (error) {
       // return res.status(400).json({ response: 'error', errors: error.array() })
-      return res.status(400).json({response:'error',error:error.array()[0]})
+      return res.status(400).json({response:'error',msg:error.array()[0].msg})
     }
   }
 ]
@@ -23,7 +23,7 @@ export const validatorUpdateProject = [
       next()
     } catch (error) {
       // return res.status(400).json({ response: 'error', errors: error.array() })
-      return res.status(400).json({response:'error',error:error.array()[0]})
+      return res.status(400).json({response:'error',msg:error.array()[0].msg})
     }
   }
 ]
