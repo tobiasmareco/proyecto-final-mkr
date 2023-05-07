@@ -9,7 +9,7 @@ export const projectRepository = {
     return await Project.find({ userId }).sort({ createdAt: -1 });
   },
   GET_PROJECT_ID: async (projectId) => {
-    return await Project.findById(projectId);
+    return await Project.findById(projectId).populate('tasks').exec();
   },
   DELETE_PROJECT: async (projectId) => {
     return await Project.findByIdAndDelete(projectId);
