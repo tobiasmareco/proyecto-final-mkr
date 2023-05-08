@@ -16,6 +16,7 @@ import ProjectProvider from "./context/ProjectsProvider";
 import Project from "./pages/Main/Project";
 import { Payment } from "./components/ProjectsComponents/Payment";
 import StripeCheckout from "react-stripe-checkout";
+import Completion from "./components/Payment/Completion";
 
 
 function App() {
@@ -42,9 +43,11 @@ function App() {
               <Route path=":id" element={<Project />} />
               <Route path="edit/:id" element={<EditProjects />} />
             </Route>
-            <Route path="/payment" element={Payment}>
-            
+            <Route>
+              <Route path="/" element={<Payment />} />
+              <Route path="/completion" element={<Completion />} />
             </Route>
+
           </Routes>
         </ProjectProvider>
       </AuthProvider>
