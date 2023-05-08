@@ -3,16 +3,22 @@ import { useEffect, useState } from "react";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { loadStripe } from "@stripe/stripe-js";
+import axiosClient from "../../config/axiosClient";
 
 function Payment() {
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState("");
 
   useEffect(() => {
-    fetch("/config").then(async (r) => {
-      const { publishableKey } = await r.json();
-      setStripePromise(loadStripe(publishableKey));
-    });
+    // fetch("/config").then(async (r) => {
+    //   const { publishableKey } = await r.json();
+    //   setStripePromise(loadStripe(publishableKey));
+    // });
+    const getKey = async () => {
+      const { data } = await axiosClient('/api/payment/config')
+      setStripePromise(loadStripe(data.publishableKey))
+    }
+    getKey()
   }, []);
 
   useEffect(() => {
