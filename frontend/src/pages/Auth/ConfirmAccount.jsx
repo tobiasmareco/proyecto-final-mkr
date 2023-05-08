@@ -1,9 +1,7 @@
-import React from 'react'
+import React from "react";
 
 function ConfirmAccount() {
-  return (
-    <div>ConfirmAccount</div>
-  )
+  return <div>Cuenta confirmada correctamente</div>;
 }
 
-export default ConfirmAccount
+export default ConfirmAccount;

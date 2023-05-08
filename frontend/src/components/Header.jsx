@@ -11,9 +11,12 @@ function Header() {
     <header className="px-4 py-5 bg-sky-800 text-white border-b">
       <div className="md:flex md:justify-between">
         <h2 className="text-2xl font-bold text-center">ProTaskManagment</h2>
-        <div className="space-x-2">
-          <Link to={"/projects"} className="">
-            Proyectos
+        <div className="space-x-2 flex justify-between mt-3 md:mt-0 items-center">
+          <Link
+            to={"/projects"}
+            className="px-3 py-1 hover:bg-sky-600 font-bold rounded-md"
+          >
+            Ver Proyectos
           </Link>
           <button
             className="bg-white text-black px-5 py-1 rounded-md hover:bg-sky-600 hover:text-gray-100 transition-colors font-bold"

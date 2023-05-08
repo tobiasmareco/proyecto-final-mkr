@@ -14,17 +14,15 @@ import CreateProject from "./pages/Main/CreateProject";
 import EditProjects from "./pages/Main/EditProjects";
 import ProjectProvider from "./context/ProjectsProvider";
 import Project from "./pages/Main/Project";
-import { Payment } from "./components/ProjectsComponents/Payment";
-import StripeCheckout from "react-stripe-checkout";
+import Payment from "./components/Payment/Payment";
 import Completion from "./components/Payment/Completion";
-
+import Canceled from "./components/Payment/Canceled";
 
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
         <ProjectProvider>
-
           <Routes>
             <Route path="/" element={<AuthLayout />}>
               <Route index element={<Login />} />
@@ -34,7 +32,10 @@ function App() {
                 element={<ConfirmAccount />}
               />
               <Route path="forgot-password" element={<ForgotPassword />} />
-              <Route path="forgot-password/:token" element={<ResetPassword />} />
+              <Route
+                path="forgot-password/:token"
+                element={<ResetPassword />}
+              />
               <Route path="reset-password/:token" element={<ResetPassword />} />
             </Route>
             <Route path="/projects" element={<MainLayout />}>
@@ -43,11 +44,13 @@ function App() {
               <Route path=":id" element={<Project />} />
               <Route path="edit/:id" element={<EditProjects />} />
             </Route>
-            <Route>
-              <Route path="/" element={<Payment />} />
-              <Route path="/completion" element={<Completion />} />
+            <Route path="/payment" element={<MainLayout />}>
+              <Route index element={<Payment />} />
+              <Route path="success" element={<Completion />} />
+              <Route path="canceled" element={<Canceled />} />
+              <Route />
             </Route>
-
+            <Route path="*" element={<h1>404 not found</h1>} />
           </Routes>
         </ProjectProvider>
       </AuthProvider>

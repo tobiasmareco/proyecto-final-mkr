@@ -26,7 +26,7 @@ function ProjectsCard({ project }) {
             </div>
             <Link
               to={_id}
-              className="text-center text-sm bg-sky-800 font-bold rounded-md text-white hover:bg-sky-700 transition-colors px-3"
+              className="text-center text-sm bg-sky-800 font-bold rounded-md text-white hover:bg-sky-700 transition-colors px-3 py-1"
             >
               Detalles
             </Link>

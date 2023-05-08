@@ -5,8 +5,8 @@ import AlertMsg from "../../components/Alert";
 import { useAuth } from "../../hooks/useAuth";
 
 function Login() {
-  const [email, setEmail] = useState("admin@gmail.com");
-  const [password, setPassword] = useState("123123");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const { setAuth } = useAuth();
   const navigate = useNavigate();

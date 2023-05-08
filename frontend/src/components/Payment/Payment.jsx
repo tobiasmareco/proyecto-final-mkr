@@ -1,38 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import axiosClient from "../../config/axiosClient";
+import useProjects from "../../hooks/useProjects";
+import AlertMsg from "../Alert";
 
-import { Elements } from "@stripe/react-stripe-js";
-import CheckoutForm from "./CheckoutForm";
-import { loadStripe } from "@stripe/stripe-js";
+const token = localStorage.getItem("token");
+const config = {
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${token}`,
+  },
+};
 
 function Payment() {
-  const [stripePromise, setStripePromise] = useState(null);
-  const [clientSecret, setClientSecret] = useState("");
-
+  const { alert, setAlert } = useProjects();
   useEffect(() => {
-    fetch("/config").then(async (r) => {
-      const { publishableKey } = await r.json();
-      setStripePromise(loadStripe(publishableKey));
-    });
+    const goToPremium = async () => {
+      try {
+        const { data } = await axiosClient.get("/api/payment/premium", config);
+        setAlert({
+          msg: data.msg,
+          error: false,
+        });
+        setTimeout(() => {
+          setAlert({});
+        }, 3000);
+      } catch (error) {
+        console.log(error.response);
+        setAlert({
+          msg: error.response.data.msg,
+          error: true,
+        });
+        setTimeout(() => {
+          setAlert({});
+        }, 3000);
+      }
+    };
+    goToPremium();
   }, []);
-
-  useEffect(() => {
-    fetch("/create-payment-intent", {
-      method: "POST",
-      body: JSON.stringify({}),
-    }).then(async (result) => {
-      var { clientSecret } = await result.json();
-      setClientSecret(clientSecret);
-    });
-  }, []);
-
   return (
     <>
-      <h1>React Stripe and the Payment Element</h1>
-      {clientSecret && stripePromise && (
-        <Elements stripe={stripePromise} options={{ clientSecret }}>
-          <CheckoutForm />
-        </Elements>
-      )}
+      <div className="mx-auto max-w-md justify-center items-center shadow-lg bg-sky-800 text-white px-5 py-10">
+        <h1 className="text-center font-bold text-2xl mb-5">
+          Obtener la Cuenta premium
+        </h1>
+        {alert.msg && <AlertMsg alert={alert} />}
+      </div>
     </>
   );
 }

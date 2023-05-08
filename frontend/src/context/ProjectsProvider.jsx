@@ -24,6 +24,8 @@ function ProjectProvider({ children }) {
   //tasks
   const [modalTasksForm, setModalTasksForm] = useState(false);
   const [tasks, setTasks] = useState({});
+  const [modalDeleteTask, setModalDeleteTask] = useState(false);
+  const [deleteTask, setDeleteTask] = useState({});
 
   const showAlert = (alert) => {
     setAlert(alert);
@@ -126,13 +128,11 @@ function ProjectProvider({ children }) {
       setLoading(true);
       const { data } = await axiosClient.get(`/api/projects/${id}`, config);
       setProject(data.result);
-      console.log(project, "getprojectid");
       setLoading(false);
+      setAlert({});
     } catch (error) {
-      setAlert({
-        msg: error.response.data.msg,
-        error: true,
-      });
+      navigate("/projects");
+      setLoading(false);
       console.log(error.response);
     }
   };
@@ -173,13 +173,19 @@ function ProjectProvider({ children }) {
           config
         );
         const lastProject = { ...project };
-        console.log(data.result, "data updated");
-        console.log(lastProject, "project actual state");
         lastProject.tasks = lastProject.tasks.map((taskState) => {
           console.log(taskState);
           data.result._id === taskState._id ? data.result : taskState;
         });
-        console.log(lastProject, "new state project");
+        setAlert({
+          msg: data.msg,
+          error: false,
+        });
+        setTimeout(() => {
+          setAlert({});
+          setModalTasksForm(false);
+          setTasks({});
+        }, 1500);
       } catch (error) {
         console.log(error.response);
       }
@@ -212,12 +218,39 @@ function ProjectProvider({ children }) {
     setModalTasksForm(true);
   };
 
+  const handleDeleteTask = (task) => {
+    setDeleteTask(task);
+    setModalDeleteTask(true);
+  };
+
+  const deleteTasks = async (task) => {
+    try {
+      const { data } = await axiosClient.delete(
+        `/api/tasks/${task._id}`,
+        config
+      );
+      setAlert({
+        msg: data.msg,
+        error: true,
+      });
+      setTimeout(() => {
+        setModalDeleteTask(false);
+        setAlert({});
+        setTasks({});
+        setDeleteTask({});
+      }, 1500);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   return (
     <projectContext.Provider
       value={{
         projects,
         showAlert,
         alert,
+        setAlert,
         createProject,
         getProjectId,
         project,
@@ -229,6 +262,11 @@ function ProjectProvider({ children }) {
         tasks,
         setTasks,
         handleEditTaskModal,
+        handleDeleteTask,
+        modalDeleteTask,
+        setModalDeleteTask,
+        deleteTask,
+        deleteTasks,
       }}
     >
       {children}
