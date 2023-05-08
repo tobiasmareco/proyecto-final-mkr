@@ -6,7 +6,6 @@ import Task from "./tasks.model.js";
 
 export const createTaskService = async (newTask, userId) => {
   try {
-    console.log(userId);
     const { premium } = await User.findById(userId);
     const projectExist = await Project.findById(newTask.projectId);
     if (!projectExist) {
@@ -27,6 +26,8 @@ export const createTaskService = async (newTask, userId) => {
       };
     }
     const task = await taskRepository.CREATE_TASK(newTask);
+    projectExist.tasks.push(task._id);
+    await projectExist.save()
     return { result: task };
   } catch (error) {
     return { error: returnError(403, error.message) };
@@ -51,7 +52,6 @@ export const getTasksService = async (projectId) => {
   }
 };
 export const getTaskIdService = async (taskId) => {
-  console.log("entre", taskId);
   try {
     const task = await taskRepository.GET_TASK_ID(taskId);
     if (!task) {
@@ -71,7 +71,6 @@ export const getTaskIdService = async (taskId) => {
 export const updateTaskService = async (newTask, taskId) => {
   try {
     const task = await Task.findById(taskId);
-    console.log(task);
     if (!task) {
       return { error: returnError(404, `No existe tarea con el id ${taskId}`) };
     }

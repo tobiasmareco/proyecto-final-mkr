@@ -15,7 +15,7 @@ export const validatorCreateTask = [
     } catch (error) {
       return res.status(400).json({
         response: 'error',
-        errors: error.array()
+        msg: error.array()[0].msg
       })
     }
   }
@@ -33,7 +33,7 @@ export const validatorUpdateTask = [
     } catch (error) {
       return res.status(400).json({
         response: 'error',
-        errors: error.array()
+        msg: error.array()[0].msg
       })
     }
   }
