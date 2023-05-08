@@ -9,7 +9,7 @@ import usersRoutes from "./Users/users.routes.js";
 import authRoutes from "./Auth/auth.routes.js";
 import { checkLogin } from "./helpers/checkLogin.js";
 import { getUserProfileController } from "./Users/users.controller.js";
-import { paymentController } from "./payment/payment.index.js";
+import { paymentController } from "./payment/server.js";
 const app = express();
 
 //~Conectar a la base de datos.
