@@ -5,7 +5,6 @@ axiosClient;
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-
   const [auth, setAuth] = useState({});
   const [loading, setLoading] = useState(true);
   const Navigate = useNavigate();
@@ -40,7 +39,6 @@ const AuthProvider = ({ children }) => {
     };
 
     authUser();
-    
   }, []);
 
   return (
