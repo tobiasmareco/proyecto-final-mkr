@@ -75,7 +75,7 @@ export const updateTaskService = async (newTask, taskId) => {
       return { error: returnError(404, `No existe tarea con el id ${taskId}`) };
     }
     task.title = newTask.title || task.title;
-    task.description = newTask.description || task.description;
+    task.description = newTask.description || task.description; 
     task.status = newTask.status || task.status;
     task.priority = newTask.priority || task.priority;
     const updatedTask = await taskRepository.UPDATE_TASK(task, taskId);
