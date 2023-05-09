@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosClient from "../../config/axiosClient";
 import AlertMsg from "../../components/Alert";
@@ -8,9 +8,15 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
-  const { setAuth } = useAuth();
+  const { auth, setAuth } = useAuth();
   const navigate = useNavigate();
   //- SUBMIT DATA - HERE...
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/projects");
+    }
+  }, []);
   const handleSubmit = async (e) => {
     setErrors([]);
     e.preventDefault();

@@ -7,19 +7,20 @@ const stripeInstance = Stripe(process.env.API_STRIPE_SECRET);
 
 const paymentRoute = express.Router();
 paymentRoute.post("/checkout", async (req, res) => {
+  //1. Crear los ids de precios en stripe.
+  const premiumPriceId = "price_1N5t7wCvjl4tGcHoN5VzAsVG";
+  //2. Generar una session
   try {
     const session = await stripeInstance.checkout.sessions.create({
-      success_url: `${process.env.FRONT_END_URL}/payment/success`,
-      cancel_url: `${process.env.FRONT_END_URL}/payment/canceled`,
-      line_items: [{ price: "price_1N4SmbI3JMaqaSPWLSod3myk", quantity: 1 }],
-      mode: "subscription",
       payment_method_types: ["card"],
-      client_reference_id: req.user,
+      mode: "payment",
+      line_items: [{ price: premiumPriceId, quantity: 1 }],
+      success_url: `${process.env.FRONT_END_URL}/payment/success/${req.user}`,
+      cancel_url: `${process.env.FRONT_END_URL}/projects`,
     });
-    res.status(200).json({ url: session.url });
+    res.send({ url: session.url });
   } catch (error) {
-    console.log(error);
-    res.status(500).send("Error en el servidor");
+    console.log(error.message);
   }
 });
 

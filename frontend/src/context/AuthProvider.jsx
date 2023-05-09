@@ -1,14 +1,13 @@
 import { useEffect, createContext, useState } from "react";
 import axiosClient from "../config/axiosClient";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 axiosClient;
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState({});
   const [loading, setLoading] = useState(true);
-  const Navigate = useNavigate();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -31,7 +30,7 @@ const AuthProvider = ({ children }) => {
           return; //verificar como mandar un error luego
         }
         setAuth(data.result);
-        // Navigate("/projects");
+        // navigate("/projects");
       } catch (error) {
         setAuth({});
       }

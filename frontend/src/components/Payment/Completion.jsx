@@ -1,6 +1,8 @@
+import { useParams } from "react-router-dom";
+
 function Completion(props) {
-    return <h1>Thank you! 🎉</h1>;
-  }
-  
-  export default Completion;
-  
+  const { userId } = useParams();
+  return <></>;
+}
+
+export default Completion;

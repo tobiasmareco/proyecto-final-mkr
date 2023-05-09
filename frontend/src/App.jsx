@@ -46,7 +46,7 @@ function App() {
             </Route>
             <Route path="/payment" element={<MainLayout />}>
               <Route index element={<Payment />} />
-              <Route path="success" element={<Completion />} />
+              <Route path="success/:userId" element={<Completion />} />
               <Route path="canceled" element={<Canceled />} />
               <Route />
             </Route>
