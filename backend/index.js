@@ -29,6 +29,6 @@ app.use("/api/profile", checkLogin, getUserProfileController);
 app.use("/api/payment", checkLogin, paymentRoute);
 
 //~Levantar el servidor.
-app.listen(process.env.API_SERVER_PORT, () => {
-  console.log(`listening on port ${process.env.API_SERVER_PORT}`);
+app.listen(process.env.PORT, () => {
+  console.log(`listening on port ${process.env.PORT}`);
 });
