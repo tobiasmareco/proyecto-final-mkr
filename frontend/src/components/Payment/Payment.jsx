@@ -1,11 +1,5 @@
 import React from "react";
 import { loadStripe } from "@stripe/stripe-js";
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements,
-} from "@stripe/react-stripe-js";
 import axiosClient from "../../config/axiosClient";
 
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISH);
